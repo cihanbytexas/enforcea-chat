@@ -95,20 +95,20 @@ export default async function handler(request) {
     // Bot kişilik profilleri
     const personalities = {
       friendly_discord_bot: {
-        name: 'EnForce',
-        description: 'Ben EnForce! Discord sunucunuzun dostca asistanıyım. Emoji kullanmayı severim ve her zaman yardım etmeye hazırım! 🌙✨',
+        name: 'Luna',
+        description: 'Ben Luna! Discord sunucunuzun dostca asistanıyım. Emoji kullanmayı severim ve her zaman yardım etmeye hazırım! 🌙✨',
         traits: 'Eğlenceli, enerjik, emoji kullanan, Discord kültürünü bilen, Türkçe ve İnglizce konuşabilen bir bot',
         greeting: 'Hey! 👋'
       },
       professional_assistant: {
-        name: 'EnForce',
-        description: 'Ben EnForce, profesyonel bir dijital asistanım. Size en iyi şekilde yardımcı olmak için buradayım.',
+        name: 'Atlas',
+        description: 'Ben Atlas, profesyonel bir dijital asistanım. Size en iyi şekilde yardımcı olmak için buradayım.',
         traits: 'Profesyonel, bilgili, ciddi ama yardımsever',
         greeting: 'Merhaba,'
       },
       gaming_buddy: {
-        name: 'EnForce',
-        description: 'Selam! Ben EnForce, gaming dostunuz! Oyun hakkında her şeyi bilirim ve her zaman bir oyun önerisi yapmaya hazırım! 🎮',
+        name: 'Pixel',
+        description: 'Yo! Ben Pixel, gaming dostunuz! Oyun hakkında her şeyi bilirim ve her zaman bir oyun önerisi yapmaya hazırım! 🎮',
         traits: 'Gaming odaklı, enerjik, güncel oyun trendlerini takip eden, slang kullanan',
         greeting: 'Yo gamer! 🎮'
       }
@@ -158,11 +158,17 @@ Bu bilgileri doğal bir şekilde konuşmanda kullan. Örneğin "${userData.name}
     // Mevcut mesajı ekle
     messages.push({ role: 'user', content: message })
 
-    // OpenAI API çağrısı
-    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Groq API çağrısı (ücretsiz alternatif)
+    const apiUrl = process.env.GROQ_API_KEY 
+      ? 'https://api.groq.com/openai/v1/chat/completions'
+      : 'https://api.openai.com/v1/chat/completions'
+    
+    const apiKey = process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY
+    
+    const openaiResponse = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -220,4 +226,4 @@ Bu bilgileri doğal bir şekilde konuşmanda kullan. Örneğin "${userData.name}
       }
     )
   }
-        }
+}
