@@ -4,9 +4,7 @@
   "description": "Custom AI API with Vercel",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "vercel build",
-    "deploy": "vercel --prod"
+    "dev": "vercel dev"
   },
   "dependencies": {},
   "devDependencies": {
